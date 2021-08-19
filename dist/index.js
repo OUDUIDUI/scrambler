@@ -1262,6 +1262,220 @@
         // }
     };
 
+    /*! *****************************************************************************
+    Copyright (c) Microsoft Corporation.
+
+    Permission to use, copy, modify, and/or distribute this software for any
+    purpose with or without fee is hereby granted.
+
+    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+    PERFORMANCE OF THIS SOFTWARE.
+    ***************************************************************************** */
+
+    function __spreadArray(to, from) {
+        for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+            to[j] = from[i];
+        return to;
+    }
+
+    /**
+     * 获取正阶打乱图
+     * @param n {number} 阶数
+     * @param scrambler {string} 打乱
+     * */
+    var NxNImages = /** @class */ (function () {
+        function NxNImages(n, scramble) {
+            this.uImg = [];
+            this.dImg = [];
+            this.lImg = [];
+            this.rImg = [];
+            this.fImg = [];
+            this.bImg = [];
+            this.n = n;
+            this.scrambleStr = scramble;
+            this.n2 = Math.pow(n, 2);
+            // 初始化
+            this.init();
+        }
+        /**
+         * 初始六个面的数组
+         * U -> 0; D -> 1; L -> 2; R -> 3; F -> 4; B -> 5
+         * */
+        NxNImages.prototype.init = function () {
+            var keys = ['uImg', 'dImg', 'lImg', 'rImg', 'fImg', 'bImg'];
+            for (var i = 0; i < this.n2; i++) {
+                for (var j = 0; j < keys.length; j++) {
+                    this[keys[j]].push(j);
+                }
+            }
+            this.uImg = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+        };
+        /**
+         * 获取打乱图
+         * */
+        NxNImages.prototype.getImage = function () {
+            // 打乱
+            this.scramble();
+            return 1;
+        };
+        /**
+         * 生成打乱图
+         * */
+        NxNImages.prototype.scramble = function () {
+            var _this = this;
+            var scrambleArr = this.scrambleStr
+                .split(' ')
+                .filter(function (i) { return i; });
+            scrambleArr.forEach(function (step) {
+                _this.handleStep(step);
+            });
+        };
+        /**
+         * 识别公式
+         * @param step {string}
+         * */
+        NxNImages.prototype.handleStep = function (step) {
+            if (step.includes('R') || step.includes('r')) {
+                // 处理R面
+                this.handleR(step);
+            }
+            else if (step.includes('L') || step.includes('l')) {
+                // 处理L面
+                this.handleL(step);
+            }
+            else if (step.includes('F') || step.includes('f')) {
+                // 处理F面
+                this.handleF(step);
+            }
+            else if (step.includes('B') || step.includes('b')) {
+                // 处理B面
+                this.handleB(step);
+            }
+            else if (step.includes('U') || step.includes('u')) {
+                // 处理U面
+                this.handleU(step);
+            }
+            else if (step.includes('D') || step.includes('d')) {
+                // 处理D面
+                this.handleD(step);
+            }
+        };
+        /**
+         * 处理R面
+         * @param step {string}
+         * */
+        NxNImages.prototype.handleR = function (step) {
+        };
+        /**
+         * 处理L面
+         * @param step {string}
+         * */
+        NxNImages.prototype.handleL = function (step) {
+        };
+        /**
+         * 处理F面
+         * @param step {string}
+         * */
+        NxNImages.prototype.handleF = function (step) {
+        };
+        /**
+         * 处理B面
+         * @param step {string}
+         * */
+        NxNImages.prototype.handleB = function (step) {
+        };
+        /**
+         * 处理U面
+         * @param step {string}
+         * */
+        NxNImages.prototype.handleU = function (step) {
+            console.log(step);
+            switch (step) {
+                case 'U':
+                    this.positiveRotate(this.uImg);
+                    break;
+                case "U'":
+                    this.oppositeRotate(this.uImg);
+                    break;
+            }
+            console.log(this.uImg);
+        };
+        /**
+         * 处理D面
+         * @param step {string}
+         * */
+        NxNImages.prototype.handleD = function (step) {
+        };
+        /**
+         * 生成打乱图
+         *
+         *          0 1 2
+         *          3 U 5
+         *          6 7 8
+         *
+         *  0 1 2   0 1 2   0 1 2   0 1 2
+         *  3 L 5   3 F 5   3 R 5   3 B 5
+         *  6 7 8   6 7 8   6 7 8   6 7 8
+         *
+         *          0 1 2
+         *          3 D 5
+         *          6 7 8
+         *
+         * */
+        /**
+         * 顺时针方向
+         * */
+        NxNImages.prototype.positiveRotate = function (mainArr) {
+            // 正面处理
+            // 0=3;3=6;6=7;7=8;8=5;5=2;2=1;1=0
+            // 3 0 1 6 4 2 7 8 5
+            var cpMainArr = __spreadArray([], mainArr);
+            for (var i = 0; i < this.n - 1; i++) {
+                // 2=1;1=0
+                mainArr[i + 1] = cpMainArr[i];
+                // 0=3;3=6
+                mainArr[i * this.n] = cpMainArr[(i + 1) * this.n];
+                // 8=5;5=2
+                mainArr[(i + 2) * this.n - 1] = cpMainArr[(i + 1) * this.n - 1];
+                // 6=7;7=8
+                mainArr[this.n2 - this.n + i] = cpMainArr[this.n2 - this.n + i + 1];
+            }
+        };
+        /**
+         * 逆时针方向
+         * */
+        NxNImages.prototype.oppositeRotate = function (mainArr) {
+            // 正面处理
+            // 0=1;1=2;2=5;5=8;8=7;7=6;6=3;3=0
+            // 1 2 5 0 4 8 3 6 7
+            var cpMainArr = __spreadArray([], mainArr);
+            for (var i = 0; i < this.n - 1; i++) {
+                // 0=1;1=2
+                mainArr[i] = cpMainArr[i + 1];
+                // 3=0;6=3
+                mainArr[(i + 1) * this.n] = cpMainArr[i * this.n];
+                // 2=5;5=8
+                mainArr[(i + 1) * this.n - 1] = cpMainArr[(i + 2) * this.n - 1];
+                // 7=6;8=7
+                mainArr[this.n2 - this.n + i + 1] = cpMainArr[this.n2 - this.n + i];
+            }
+        };
+        NxNImages.prototype.doubleRotate = function () {
+        };
+        return NxNImages;
+    }());
+
+    var scrambleImage = {
+        NxNImages: NxNImages
+    };
+
+    // console.log(new scrambleImage.NxNImages(3, "L' D  F2 U  F2 U2 F2 D' R2 U' L2 R2 U  F' D  B2 U' L' B' R").getImage())
+    console.log(new scrambleImage.NxNImages(3, "U U'").getImage());
     var Scrambler = /** @class */ (function () {
         function Scrambler() {
         }
