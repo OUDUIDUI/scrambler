@@ -39,7 +39,7 @@ import {
     USE_COMBP_PRUN,
     USE_TWIST_FLIP_PRUN
 } from "./constants";
-import CubieCube from "./CubieCube";
+import CubieCube from "./cubie-cube";
 import {getComb, getNParity, getPruning, hasZero, setNPerm, setPruning} from "./tools";
 
 //init pruning tables

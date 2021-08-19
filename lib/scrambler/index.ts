@@ -1,4 +1,7 @@
 import min2phase from "../min2phase"
+import scrambleImage from "../scramble-image"
+
+console.log(scrambleImage)
 
 export default class Scrambler {
 

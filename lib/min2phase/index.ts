@@ -1,4 +1,4 @@
-import Search from "./Search";
+import Search from "./search";
 import {initUtil, initMoveCubes, fromScramble, initPrunTables, randomCube} from "./init";
 
 // init

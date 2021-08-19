@@ -1,4 +1,4 @@
-import CubieCube from "./CubieCube";
+import CubieCube from "./cubie-cube";
 
 export const USE_TWIST_FLIP_PRUN: boolean = true;
 export const PARTIAL_INIT_LEVEL: number = 2;

@@ -11,8 +11,8 @@ import {
     TRY_THREE_AXES, ud2std, urfMove, USE_CONJ_PRUN
 } from "./constants";
 import {getNParity, getNPermFull, getPermSymInv, getPruningMax} from "./tools";
-import CubieCube from "./CubieCube";
-import CoordCube from "./CoordCube";
+import CubieCube from "./cubie-cube";
+import CoordCube from "./coord-cube";
 
 import {initPrunTables, MCPermPrunMax, EPermCCombPPrunMax} from "./init";
 

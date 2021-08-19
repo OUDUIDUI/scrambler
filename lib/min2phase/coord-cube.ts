@@ -9,7 +9,7 @@ import {
     USE_CONJ_PRUN, USE_TWIST_FLIP_PRUN
 } from "./constants";
 import {getPruningMax} from "./tools";
-import CubieCube from "./CubieCube";
+import CubieCube from "./cubie-cube";
 import {TwistFlipPrunMax, UDSliceTwistPrunMax, UDSliceFlipPrunMax} from "./init";
 
 export default class CoordCube {
